@@ -46,34 +46,50 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			
-		<!--	<plugin>
+			<plugin>
 				<groupId>io.fabric8</groupId>
 				<artifactId>docker-maven-plugin</artifactId>
-				<version>0.21.0</version>
+				<version>0.36.0</version>
 
 				<configuration>
-					<dockerHost>tcp://192.168.99.100:2376</dockerHost>  
-                    <certPath>C:\Users\Richard\.docker\machine\machines\default</certPath>
-				
+					<!--  If using Docker Toolbox (Windows), you must find the IP of your VM. docker-machine ip -->
+
+
+					<!--  linux -->
+                    <!--<dockerHost>http://127.0.0.1:2375</dockerHost>-->
+                    <!--  this is for Mac -->
+                    <!-- <dockerHost>unix:///var/run/docker.sock</dockerHost> -->
+
                     <verbose>true</verbose>
 					<images>
 						<image>
-							<name>richardchesterwood/k8s-fleetman-position-simulator</name>
+							<name>dhirasp7/simulator</name>
 							<build>
+								<!--  TODO better to have this in a subdirectory -->
 								<dockerFileDir>${project.basedir}/src/main/docker/</dockerFileDir>
+
+                                <!--copies artficact to docker build dir in target-->
 								<assembly>
 									<descriptorRef>artifact</descriptorRef>
 								</assembly>
 								<tags>
-									<tag>replicated</tag>
+									<tag>latest</tag>
+									<tag>${project.version}</tag>
 								</tags>
 							</build>
 						</image>
 					</images>
 				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>build</goal>
+							<goal>push</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
-			-->
 		</plugins>
 		
 	
