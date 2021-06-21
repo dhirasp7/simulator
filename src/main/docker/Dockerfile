@@ -1,7 +1,10 @@
-FROM openjdk:8u131-jre
+FROM openjdk:11.0.8-jre-slim
 
-MAINTAINER Richard Chesterwood "richard@inceptiontraining.co.uk"
+MAINTAINER Sanjeev Dhir "sanjeev.dhir@gmail.com"
 
-ADD maven/positionsimulator-0.0.1-SNAPSHOT.jar webapp.jar
+ARG VERSION=0.0.1-SNAPSHOT
+WORKDIR /app/
+ADD maven/simulator-${VERSION}.jar application.jar
+EXPOSE 8080
 
-CMD ["java","-jar","webapp.jar"]
+CMD ["java", "-Dspring.profiles.acive=docker", "-jar", "/app/application.jar"]
